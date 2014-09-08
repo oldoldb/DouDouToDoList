@@ -4,8 +4,8 @@
     tools:context="com.oldoldb.doudoutodolist.DouDouToDoListActitvity" >
 
     <item
-        android:id="@+id/action_example"
-        android:title="@string/action_example"
+        android:id="@+id/action_add_item"
+        android:title="@string/action_add_item"
         app:showAsAction="withText|ifRoom"/>
     <item
         android:id="@+id/action_settings"

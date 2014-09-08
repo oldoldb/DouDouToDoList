@@ -132,6 +132,9 @@ public class DouDouToDoListActitvity extends ActionBarActivity
 			case 1:
 				rootView = new TodayToDoView(getActivity().getApplicationContext(), container);
 				break;
+			case 2:
+				rootView = new EditItemView(getActivity(), container);
+				break;
 			default:
 				rootView = inflater.inflate(R.layout.dd, container, false);
 	            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
