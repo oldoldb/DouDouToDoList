@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:text="@string/edit_item_view_time_button_default_text" />
     <CheckBox 
-        android:id="@+id/is_everyday_checkbox"
+        android:id="@+id/is_repeat_checkbox"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -35,6 +35,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="@string/edit_item_view_add_photo_button_default_text" />
+    <ImageView 
+        android:id="@+id/photo_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

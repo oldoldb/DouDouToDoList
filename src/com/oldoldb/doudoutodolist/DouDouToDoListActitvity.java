@@ -1,22 +1,31 @@
 package com.oldoldb.doudoutodolist;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 
 public class DouDouToDoListActitvity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+	private static EditItemView mRootEditItemView;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -97,8 +106,46 @@ public class DouDouToDoListActitvity extends ActionBarActivity
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    
 
-    /**
+    @Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+    	if(arg0 == 2)
+    	{
+    		String filename = System.currentTimeMillis() + ".jpg";
+    		File fileFolder = new File(Environment.getExternalStorageDirectory() + "/photoForTodoList/");
+    		if(!fileFolder.exists()){
+    			fileFolder.mkdir();
+    		}
+    		File photoFile = new File(fileFolder, filename);
+    		Bundle bundle = arg2.getExtras();
+    		Bitmap bitmap = (Bitmap)bundle.get("data");
+    		FileOutputStream fileOutputStream = null;
+    		try {
+				fileOutputStream = new FileOutputStream(photoFile);
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+			} catch (FileNotFoundException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				try {
+					fileOutputStream.flush();
+					fileOutputStream.close();
+				} catch (IOException e2) {
+					// TODO: handle exception
+					e2.printStackTrace();
+				}
+			}
+    		mRootEditItemView.showImageView(photoFile);
+    		
+    	}
+	}
+
+
+
+	/**
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
@@ -130,17 +177,18 @@ public class DouDouToDoListActitvity extends ActionBarActivity
         	View rootView;
         	switch (indexOfView) {
 			case 1:
-				rootView = new TodayToDoView(getActivity().getApplicationContext(), container);
-				break;
+				rootView = new TodayToDoView(getActivity(), container);
+				return rootView;
 			case 2:
-				rootView = new EditItemView(getActivity(), container);
-				break;
+				mRootEditItemView = new EditItemView(getActivity(), container);
+				return mRootEditItemView;
 			default:
 				rootView = inflater.inflate(R.layout.dd, container, false);
 	            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 	            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+	            return rootView;
 			}
-            return rootView;
+            
         }
 
         @Override

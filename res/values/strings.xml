@@ -23,4 +23,6 @@
 	<string name="time_dialog_title">设置时间</string>
 	<string name="time_dialog_cancel_button_default_text">取消</string>
 	<string name="time_dialog_save_button_default_text">保存</string>
+	<string name="todo_item_info_title">任务详情</string>
+	<string name="todo_item_info_back_button_default_text">返回</string>
 </resources>
