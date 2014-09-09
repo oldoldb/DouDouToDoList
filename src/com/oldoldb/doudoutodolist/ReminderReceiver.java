@@ -10,6 +10,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
 		Intent serviceIntent = new Intent(context, ReminderService.class);
+		serviceIntent.putExtra("title", intent.getStringExtra("title"));
 		context.startService(serviceIntent);
 	}
 

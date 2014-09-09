@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+@SuppressLint("ViewConstructor") 
 public class CompleteToDoView extends RelativeLayout {
 
 	private LayoutInflater mInflater;

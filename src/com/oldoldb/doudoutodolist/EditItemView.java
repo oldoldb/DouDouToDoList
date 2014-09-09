@@ -7,15 +7,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.MediaStore;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,14 +97,17 @@ public class EditItemView extends LinearLayout {
 			}
 		}
 	};
-	private void testest()
+	private void addNotification()
 	{
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 17);
-		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
+		calendar.set(Calendar.YEAR, mToDoItemInfo.getDate_year());
+		calendar.set(Calendar.MONTH, mToDoItemInfo.getDate_month());
+		calendar.set(Calendar.DAY_OF_MONTH, mToDoItemInfo.getDate_day());
+		calendar.set(Calendar.HOUR_OF_DAY, mToDoItemInfo.getTime_hour());
+		calendar.set(Calendar.MINUTE, mToDoItemInfo.getTime_minute());
 		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.AM_PM, Calendar.PM);
 		Intent intent = new Intent(mContext, ReminderReceiver.class);
+		intent.putExtra("title", mToDoItemInfo.getTitle());
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
 		AlarmManager alarmManager = (AlarmManager)mContext.getSystemService(Activity.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);;
@@ -118,24 +117,23 @@ public class EditItemView extends LinearLayout {
 		mToDoItemInfo.setTitle(mTitleEditText.getText().toString());
 		mToDoItemInfo.setIs_repeat(mRepeatCheckBox.isChecked()?1:0);
 		mDouDouToDoListDB.addToDoItemInfo(mToDoItemInfo);
-	//	addNotification();
-		testest();
+		addNotification();
 	}
 	private void onDateButtonClicked()
 	{
 		mDateLayout = (LinearLayout)mLayoutInflater.inflate(R.layout.date_dialog, null);
 		mDatePicker = (DatePicker)mDateLayout.findViewById(R.id.date_picker);
-		Calendar calendar = Calendar.getInstance();
+		final Calendar calendar = Calendar.getInstance();
 		mDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new OnDateChangedListener() {
 			
 			@Override
 			public void onDateChanged(DatePicker view, int year, int monthOfYear,
 					int dayOfMonth) {
 				// TODO Auto-generated method stub
-				mDateString = year + "-" + monthOfYear + "-" + dayOfMonth;
 				mToDoItemInfo.setDate_year(year);
 				mToDoItemInfo.setDate_month(monthOfYear);
 				mToDoItemInfo.setDate_day(dayOfMonth);
+				mDateString = mToDoItemInfo.getDateString();
 			}
 		});
 		new AlertDialog.Builder(mContext)
@@ -146,6 +144,9 @@ public class EditItemView extends LinearLayout {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
+				if(mDateString == null){
+					mDateString = String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+				}
 				mDateButton.setText(mDateString);
 			}
 		})
@@ -161,9 +162,9 @@ public class EditItemView extends LinearLayout {
 			@Override
 			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 				// TODO Auto-generated method stub
-				mTimeString = hourOfDay + ":" + minute;
 				mToDoItemInfo.setTime_hour(hourOfDay);
 				mToDoItemInfo.setTime_minute(minute);
+				mTimeString = mToDoItemInfo.getTimeString();
 			}
 		});
 		new AlertDialog.Builder(mContext)
@@ -174,6 +175,9 @@ public class EditItemView extends LinearLayout {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
+				if(mTimeString == null){
+					mTimeString = String.format("%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE));
+				}
 				mTimeButton.setText(mTimeString);
 			}
 		})

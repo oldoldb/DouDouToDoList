@@ -1,6 +1,7 @@
 package com.oldoldb.doudoutodolist;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import android.text.format.Time;
 
@@ -77,7 +78,6 @@ public class ToDoItemInfo implements Comparable {
 		public void setTitle(String title) {
 			this.title = title;
 		}
-		
 		public ToDoItemInfo()
 		{
 			Calendar calendar = Calendar.getInstance();
@@ -92,10 +92,21 @@ public class ToDoItemInfo implements Comparable {
 			title = "";
 			image_path = "";
 		}
+		
+		public String getTimeString()
+		{
+			return String.format(Locale.CHINA, "%02d:%02d", time_hour, time_minute);
+		}
+		public String getDateString()
+		{
+			return String.format(Locale.CHINA, "%04d-%02d-%02d", date_year, date_month + 1, date_day);
+		}
+		
+		
 		@Override
 		public String toString() {
 			// TODO Auto-generated method stub
-			return date_year + "-" + date_month + "-" + date_day ;
+			return getDateString() + "   " + getTimeString();
 		}
 		@Override
 		public int compareTo(Object another) {

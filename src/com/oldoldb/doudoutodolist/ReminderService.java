@@ -23,16 +23,17 @@ public class ReminderService extends Service {
 		super.onCreate();
 	}
 
+	
 	@Override
-	public void onStart(Intent intent, int startId) {
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
+		super.onStartCommand(intent, flags, startId);
 		mNotificationManager = (NotificationManager)this.getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
 		Intent intent2 = new Intent(this.getApplicationContext(), DouDouToDoListActitvity.class);
 		intent2.putExtra("isNotification", true);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
 		.setSmallIcon(R.drawable.ic_launcher)
-		.setContentTitle("Hello")
+		.setContentTitle(intent.getStringExtra("title"))
 		.setWhen(System.currentTimeMillis())
 		.setAutoCancel(true);
 		builder.setDefaults(Notification.DEFAULT_VIBRATE);
@@ -42,7 +43,9 @@ public class ReminderService extends Service {
 		PendingIntent pendingIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 		builder.setContentIntent(pendingIntent);
 		mNotificationManager.notify(0, builder.build());
+		return START_NOT_STICKY;
 	}
+
 
 	@Override
 	public void onDestroy() {

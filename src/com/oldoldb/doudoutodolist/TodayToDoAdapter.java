@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
@@ -25,9 +24,10 @@ public class TodayToDoAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private List<ToDoItemInfo> mToDoItemInfos;
-	private ToDoItemInfo mToDoItemInfo;
 	private LayoutInflater mInflater;
 	private ViewHolder mTouchHolder;
+	private boolean mHasTapup;
+	private boolean mHasScrolled;
 	public TodayToDoAdapter(Context context, List<ToDoItemInfo> toDoItemInfos)
 	{
 		mContext = context;
@@ -60,7 +60,6 @@ public class TodayToDoAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		mToDoItemInfo = mToDoItemInfos.get(position);
 		ViewHolder viewHolder = null;
 		if(convertView == null)
 		{
@@ -81,19 +80,26 @@ public class TodayToDoAdapter extends BaseAdapter {
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				mTouchHolder = (ViewHolder)v.getTag();
+				mHasScrolled = false;
+				mHasTapup = false;
 				gestureDetector.onTouchEvent(event);
+				if(mHasTapup){
+					showItemDialog(mToDoItemInfos.get(position));
+				}else if(mHasScrolled){
+					mTouchHolder.deleteButton.setVisibility(View.VISIBLE);
+				}
 				return true;
 			}
 		});
-		viewHolder.titleText.setText(mToDoItemInfo.getTitle());
-		viewHolder.dateText.setText(mToDoItemInfo.toString());
+		viewHolder.titleText.setText(mToDoItemInfos.get(position).getTitle());
+		viewHolder.dateText.setText(mToDoItemInfos.get(position).toString());
 		viewHolder.deleteButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				v.setVisibility(View.GONE);
-				DouDouToDoListDB.getInstance(mContext).updateToDoItemInfo(mToDoItemInfo);
+				DouDouToDoListDB.getInstance(mContext).updateToDoItemInfo(mToDoItemInfos.get(position));
 				refreshData();
 			}
 		});
@@ -107,7 +113,7 @@ public class TodayToDoAdapter extends BaseAdapter {
 		CheckBox isRepeatCheckBox = (CheckBox)linearLayout.findViewById(R.id.is_repeat_checkbox);
 		ImageView detailiImageView = (ImageView)linearLayout.findViewById(R.id.detal_image);
 		titleTextView.setText(toDoItemInfo.getTitle());
-		dateTimeTextView.setText(toDoItemInfo.toString() + "   " + toDoItemInfo.getTime_hour() + ":" + toDoItemInfo.getTime_minute());
+		dateTimeTextView.setText(toDoItemInfo.toString());
 		isRepeatCheckBox.setSelected(toDoItemInfo.getIs_repeat()==1?true:false);
 		detailiImageView.setImageBitmap(DouDouToDoListUtils.getCompressBitmap(toDoItemInfo.getImage_path(), detailiImageView.getWidth(), detailiImageView.getHeight()));
 		new AlertDialog.Builder(mContext)
@@ -121,7 +127,8 @@ public class TodayToDoAdapter extends BaseAdapter {
 		@Override
 		public boolean onSingleTapUp(MotionEvent e) {
 			// TODO Auto-generated method stub
-			showItemDialog(mToDoItemInfo);
+			mHasTapup = true;
+		//	showItemDialog(mToDoItemInfo);
 			return false;
 		}
 
@@ -130,7 +137,8 @@ public class TodayToDoAdapter extends BaseAdapter {
 				float velocityY) {
 			// TODO Auto-generated method stub
 			if(e1.getX() - e2.getX() > 50){
-				mTouchHolder.deleteButton.setVisibility(View.VISIBLE);
+				mHasScrolled = true;
+			//	mTouchHolder.deleteButton.setVisibility(View.VISIBLE);
 			}
 			return false;
 		}

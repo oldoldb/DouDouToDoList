@@ -2,7 +2,6 @@ package com.oldoldb.doudoutodolist;
 
 import java.util.List;
 
-import com.oldoldb.doudoutodolist.TodayToDoAdapter.ViewHolder;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,10 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,9 +23,8 @@ public class CompleteToDoAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private List<ToDoItemInfo> mToDoItemInfos;
-	private ToDoItemInfo mToDoItemInfo;
 	private LayoutInflater mInflater;
-	private ViewHolder mTouchHolder;
+	private boolean mHasTapup;
 	public CompleteToDoAdapter(Context context, List<ToDoItemInfo> toDoItemInfos)
 	{
 		mContext = context;
@@ -74,9 +70,11 @@ public class CompleteToDoAdapter extends BaseAdapter {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
-				mTouchHolder = (ViewHolder)v.getTag();
-				mToDoItemInfo = mToDoItemInfos.get(position);
+				mHasTapup = false;
 				gestureDetector.onTouchEvent(event);
+				if(mHasTapup){
+					showItemDialog(mToDoItemInfos.get(position));
+				}
 				return true;
 			}
 		});
@@ -92,7 +90,7 @@ public class CompleteToDoAdapter extends BaseAdapter {
 		CheckBox isRepeatCheckBox = (CheckBox)linearLayout.findViewById(R.id.is_repeat_checkbox);
 		ImageView detailiImageView = (ImageView)linearLayout.findViewById(R.id.detal_image);
 		titleTextView.setText(toDoItemInfo.getTitle());
-		dateTimeTextView.setText(toDoItemInfo.toString() + "   " + toDoItemInfo.getTime_hour() + ":" + toDoItemInfo.getTime_minute());
+		dateTimeTextView.setText(toDoItemInfo.toString());
 		isRepeatCheckBox.setSelected(toDoItemInfo.getIs_repeat()==1?true:false);
 		detailiImageView.setImageBitmap(DouDouToDoListUtils.getCompressBitmap(toDoItemInfo.getImage_path(), detailiImageView.getWidth(), detailiImageView.getHeight()));
 		new AlertDialog.Builder(mContext)
@@ -106,7 +104,7 @@ public class CompleteToDoAdapter extends BaseAdapter {
 		@Override
 		public boolean onSingleTapUp(MotionEvent e) {
 			// TODO Auto-generated method stub
-			showItemDialog(mToDoItemInfo);
+			mHasTapup = true;
 			return false;
 		}
 
