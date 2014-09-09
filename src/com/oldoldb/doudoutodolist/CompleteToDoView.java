@@ -13,21 +13,20 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-@SuppressLint("ViewConstructor") 
-public class TodayToDoView extends RelativeLayout {
-	
+public class CompleteToDoView extends RelativeLayout {
+
 	private LayoutInflater mInflater;
-	private ListView mTodayTodoListView;
-	private	TodayToDoAdapter mTodayToDoAdapter;
+	private ListView mCompleteTodoListView;
+	private	CompleteToDoAdapter mCompleteToDoAdapter;
 	private Context mContext;
 	private List<ToDoItemInfo> mToDoItemInfos = new ArrayList<ToDoItemInfo>();
 	private DouDouToDoListDB mDouDouToDoListDB;
-	public TodayToDoView(final Context context, ViewGroup rootView) {
+	public CompleteToDoView(final Context context, ViewGroup rootView) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		mContext = context;
 		mDouDouToDoListDB = DouDouToDoListDB.getInstance(mContext);
-		mToDoItemInfos = mDouDouToDoListDB.loadToDoItemInfos();
+		mToDoItemInfos = mDouDouToDoListDB.loadCompleteToDoItemInfos();
 		initialView(context, rootView);
 	}
 	@SuppressLint("InlinedApi") 
@@ -53,11 +52,9 @@ public class TodayToDoView extends RelativeLayout {
 		});
 		swipeRefreshLayout.setColorScheme(android.R.color.holo_blue_bright, 
 				android.R.color.holo_green_light, android.R.color.holo_orange_light, android.R.color.holo_red_light);
-		mTodayTodoListView = (ListView)todayToDoViewLayout.findViewById(R.id.list_view);
-		mTodayToDoAdapter = new TodayToDoAdapter(context, mToDoItemInfos);
-		mTodayTodoListView.setAdapter(mTodayToDoAdapter);
+		mCompleteTodoListView = (ListView)todayToDoViewLayout.findViewById(R.id.list_view);
+		mCompleteToDoAdapter = new CompleteToDoAdapter(context, mToDoItemInfos);
+		mCompleteTodoListView.setAdapter(mCompleteToDoAdapter);
 		this.addView(todayToDoViewLayout);
 	}
-	
-
 }

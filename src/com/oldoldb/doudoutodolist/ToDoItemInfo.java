@@ -8,6 +8,14 @@ import android.text.format.Time;
 public class ToDoItemInfo implements Comparable {
 
 		private int id;
+		private String title;
+		private int date_month;
+		private int date_day;
+		private int time_hour;
+		private int time_minute;
+		private int is_repeat;
+		private String image_path;
+		private int is_complete;
 		public int getId() {
 			return id;
 		}
@@ -63,20 +71,13 @@ public class ToDoItemInfo implements Comparable {
 		public void setIs_complete(int is_complete) {
 			this.is_complete = is_complete;
 		}
-		private String title;
 		public String getTitle() {
 			return title;
 		}
 		public void setTitle(String title) {
 			this.title = title;
 		}
-		private int date_month;
-		private int date_day;
-		private int time_hour;
-		private int time_minute;
-		private int is_repeat;
-		private String image_path;
-		private int is_complete;
+		
 		public ToDoItemInfo()
 		{
 			Calendar calendar = Calendar.getInstance();

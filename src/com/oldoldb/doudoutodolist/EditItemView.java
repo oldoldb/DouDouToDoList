@@ -2,22 +2,29 @@ package com.oldoldb.doudoutodolist;
 
 import java.io.File;
 import java.util.Calendar;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.MediaStore;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
@@ -94,11 +101,25 @@ public class EditItemView extends LinearLayout {
 			}
 		}
 	};
+	private void testest()
+	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 17);
+		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.AM_PM, Calendar.PM);
+		Intent intent = new Intent(mContext, ReminderReceiver.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+		AlarmManager alarmManager = (AlarmManager)mContext.getSystemService(Activity.ALARM_SERVICE);
+		alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);;
+	}
 	private void onSaveButtonClicked()
 	{
 		mToDoItemInfo.setTitle(mTitleEditText.getText().toString());
 		mToDoItemInfo.setIs_repeat(mRepeatCheckBox.isChecked()?1:0);
 		mDouDouToDoListDB.addToDoItemInfo(mToDoItemInfo);
+	//	addNotification();
+		testest();
 	}
 	private void onDateButtonClicked()
 	{

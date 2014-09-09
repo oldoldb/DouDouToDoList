@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
 public class DouDouToDoListDBHelper extends SQLiteOpenHelper {
 
-	public static final String CREATE_COUNTER_INFO = "create table ToDoListInfo ("
+	public static final String CREATE_TABLE = "create table ToDoListInfo ("
 			+ "id integer primary key autoincrement, "
 			+ "title text, "
 			+ "date_year integer, "
@@ -26,7 +26,7 @@ public class DouDouToDoListDBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL(CREATE_COUNTER_INFO);
+		db.execSQL(CREATE_TABLE);
 	}
 
 	@Override

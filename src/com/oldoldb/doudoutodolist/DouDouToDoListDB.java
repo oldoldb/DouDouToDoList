@@ -2,6 +2,9 @@ package com.oldoldb.doudoutodolist;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DouDouToDoListDB {
 
-public static final String DB_NAME = "doudou_todolist_db";
+	public static final String DB_NAME = "doudou_todolist_db";
 	
 	public static final String TABLE_NAME = "ToDoListInfo";
 
@@ -50,11 +53,11 @@ public static final String DB_NAME = "doudou_todolist_db";
 	public List<ToDoItemInfo> loadToDoItemInfos(){
 		List<ToDoItemInfo> list = new ArrayList<ToDoItemInfo>();
 		Cursor cursor = db.query(TABLE_NAME, null, "is_complete = ?", new String[]{"0"}, null, null, null);
-		System.out.println(cursor == null);
 		if(cursor.moveToFirst())
 		{
 			do{
 				ToDoItemInfo toDoItemInfo = new ToDoItemInfo();
+				toDoItemInfo.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				toDoItemInfo.setTitle(cursor.getString(cursor.getColumnIndex("title")));
 				toDoItemInfo.setDate_year(cursor.getInt(cursor.getColumnIndex("date_year")));
 				toDoItemInfo.setDate_month(cursor.getInt(cursor.getColumnIndex("date_month")));
@@ -68,5 +71,54 @@ public static final String DB_NAME = "doudou_todolist_db";
 			} while(cursor.moveToNext());
 		}
 		return list;
+	}
+	public List<ToDoItemInfo> loadCompleteToDoItemInfos(){
+		List<ToDoItemInfo> list = new ArrayList<ToDoItemInfo>();
+		Cursor cursor = db.query(TABLE_NAME, null, "is_complete = ?", new String[]{"1"}, null, null, null);
+		if(cursor.moveToFirst())
+		{
+			do{
+				ToDoItemInfo toDoItemInfo = new ToDoItemInfo();
+				toDoItemInfo.setId(cursor.getInt(cursor.getColumnIndex("id")));
+				toDoItemInfo.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+				toDoItemInfo.setDate_year(cursor.getInt(cursor.getColumnIndex("date_year")));
+				toDoItemInfo.setDate_month(cursor.getInt(cursor.getColumnIndex("date_month")));
+				toDoItemInfo.setDate_day(cursor.getInt(cursor.getColumnIndex("date_day")));
+				toDoItemInfo.setTime_hour(cursor.getInt(cursor.getColumnIndex("time_hour")));
+				toDoItemInfo.setTime_minute(cursor.getInt(cursor.getColumnIndex("time_minute")));
+				toDoItemInfo.setIs_repeat(cursor.getInt(cursor.getColumnIndex("is_repeat")));
+				toDoItemInfo.setIs_complete(cursor.getInt(cursor.getColumnIndex("is_complete")));
+				toDoItemInfo.setImage_path(cursor.getString(cursor.getColumnIndex("image_path")));
+				list.add(toDoItemInfo);
+			} while(cursor.moveToNext());
+		}
+		return list;
+	}
+	public void updateToDoItemInfo(ToDoItemInfo toDoItemInfo)
+	{
+		if(toDoItemInfo != null)
+		{
+			int id = toDoItemInfo.getId();
+			Cursor cursor = db.query(TABLE_NAME, null, "id = ? ", new String[]{String.valueOf(id)}, null, null, null);
+			if(cursor.moveToFirst())
+			{
+				modifyToDoItemInfo(toDoItemInfo);
+			}
+		}
+	}
+
+	public void modifyToDoItemInfo(ToDoItemInfo toDoItemInfo)
+	{
+		ContentValues values = new ContentValues();
+		values.put("title", toDoItemInfo.getTitle());
+		values.put("date_year", toDoItemInfo.getDate_year());
+		values.put("date_month", toDoItemInfo.getDate_month());
+		values.put("date_day", toDoItemInfo.getDate_day());
+		values.put("time_hour", toDoItemInfo.getTime_hour());
+		values.put("time_minute", toDoItemInfo.getTime_minute());
+		values.put("is_repeat", toDoItemInfo.getIs_repeat());
+		values.put("is_complete", 1);
+		values.put("image_path", toDoItemInfo.getImage_path());
+		db.update(TABLE_NAME, values, "id = ?", new String[]{String.valueOf(toDoItemInfo.getId())});
 	}
 }

@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">DouDouToDoList</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_todo">待办任务</string>
+    <string name="title_add_info">添加任务</string>
+    <string name="title_complete">已完成任务</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_add_item">+</string>
@@ -25,4 +25,5 @@
 	<string name="time_dialog_save_button_default_text">保存</string>
 	<string name="todo_item_info_title">任务详情</string>
 	<string name="todo_item_info_back_button_default_text">返回</string>
+	<string name="today_todo_item_view_button_default_text">完成</string>
 </resources>

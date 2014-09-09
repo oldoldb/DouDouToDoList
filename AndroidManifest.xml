@@ -9,6 +9,8 @@
         android:targetSdkVersion="19" />
 	<uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.VIBRATE"/> 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -23,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service 
+            android:name="com.oldoldb.doudoutodolist.ReminderService"
+            android:enabled="true" />
+        <receiver
+            android:name="com.oldoldb.doudoutodolist.ReminderReceiver" />
     </application>
 
 </manifest>

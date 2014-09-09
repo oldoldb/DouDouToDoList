@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,9 +37,11 @@ public class DouDouToDoListActitvity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    private boolean mIsFromNotification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mIsFromNotification = getIntent().getBooleanExtra("isNotification", false);
         setContentView(R.layout.main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -49,6 +52,10 @@ public class DouDouToDoListActitvity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        
+        if(mIsFromNotification){
+        	onNavigationDrawerItemSelected(0);
+        }
     }
 
     @Override
@@ -63,13 +70,13 @@ public class DouDouToDoListActitvity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.title_todo);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.title_add_info);
                 break;
             case 3:
-                mTitle = getString(R.string.title_section3);
+                mTitle = getString(R.string.title_complete);
                 break;
         }
     }
@@ -182,6 +189,9 @@ public class DouDouToDoListActitvity extends ActionBarActivity
 			case 2:
 				mRootEditItemView = new EditItemView(getActivity(), container);
 				return mRootEditItemView;
+			case 3:
+				rootView = new CompleteToDoView(getActivity(), container);
+				return rootView;
 			default:
 				rootView = inflater.inflate(R.layout.dd, container, false);
 	            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
