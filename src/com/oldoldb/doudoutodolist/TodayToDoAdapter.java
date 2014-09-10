@@ -114,7 +114,7 @@ public class TodayToDoAdapter extends BaseAdapter {
 		ImageView detailiImageView = (ImageView)linearLayout.findViewById(R.id.detal_image);
 		titleTextView.setText(toDoItemInfo.getTitle());
 		dateTimeTextView.setText(toDoItemInfo.toString());
-		isRepeatCheckBox.setSelected(toDoItemInfo.getIs_repeat()==1?true:false);
+		isRepeatCheckBox.setChecked(toDoItemInfo.getIs_repeat()==1?true:false);
 		detailiImageView.setImageBitmap(DouDouToDoListUtils.getCompressBitmap(toDoItemInfo.getImage_path(), detailiImageView.getWidth(), detailiImageView.getHeight()));
 		new AlertDialog.Builder(mContext)
 		.setTitle(mContext.getResources().getString(R.string.todo_item_info_title))

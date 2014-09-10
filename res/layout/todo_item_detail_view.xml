@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:clickable="false"
         android:text="@string/edit_item_view_is_everyday_checkbox_default_text" />
     <ImageView 
         android:id="@+id/detal_image"

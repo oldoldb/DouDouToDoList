@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class DouDouToDoListUtils {
+	public static int REQUEST_CODE_AFTER_ADD_TODO_ITEM = 1;
+	public static int REQUEST_CODE_AFTER_TAKE_PHOTO = 2;
 	public static Bitmap getCompressBitmap(String filename, int width, int height)
 	{
 		Log.d("DOUDOU", filename);

@@ -91,18 +91,37 @@ public class EditItemView extends LinearLayout {
 				onTimeButtonClicked();
 				break;
 			case R.id.save_button:
-				onSaveButtonClicked();
+				if(isInfoOk()){
+					onSaveButtonClicked();
+				}else{
+					showAlertDialog();
+					mTitleEditText.requestFocus();
+				}
 			default:
 				break;
 			}
 		}
 	};
+	private void showAlertDialog()
+	{
+		new AlertDialog.Builder(mContext)
+		.setTitle(getResources().getString(R.string.edit_item_view_title_is_incomplete))
+		.setNegativeButton(getResources().getString(R.string.todo_item_info_back_button_default_text), null)
+		.show();
+	}
+	private boolean isInfoOk()
+	{
+		if(mTitleEditText.getText().toString().trim().length() == 0)
+		{
+			return false;
+		}
+		return true;
+	}
 	private void addNotification()
 	{
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, mToDoItemInfo.getDate_year());
 		calendar.set(Calendar.MONTH, mToDoItemInfo.getDate_month());
-		calendar.set(Calendar.DAY_OF_MONTH, mToDoItemInfo.getDate_day());
 		calendar.set(Calendar.HOUR_OF_DAY, mToDoItemInfo.getTime_hour());
 		calendar.set(Calendar.MINUTE, mToDoItemInfo.getTime_minute());
 		calendar.set(Calendar.SECOND, 0);
@@ -110,7 +129,12 @@ public class EditItemView extends LinearLayout {
 		intent.putExtra("title", mToDoItemInfo.getTitle());
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
 		AlarmManager alarmManager = (AlarmManager)mContext.getSystemService(Activity.ALARM_SERVICE);
-		alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);;
+		if(mToDoItemInfo.getIs_repeat() == 1){
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+		}else{
+			calendar.set(Calendar.DAY_OF_MONTH, mToDoItemInfo.getDate_day());
+			alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+		}
 	}
 	private void onSaveButtonClicked()
 	{
@@ -118,6 +142,9 @@ public class EditItemView extends LinearLayout {
 		mToDoItemInfo.setIs_repeat(mRepeatCheckBox.isChecked()?1:0);
 		mDouDouToDoListDB.addToDoItemInfo(mToDoItemInfo);
 		addNotification();
+		Intent intent = new Intent(mContext, DouDouToDoListActitvity.class);
+		Activity hostActivity = (Activity)mContext;
+		hostActivity.startActivityForResult(intent, DouDouToDoListUtils.REQUEST_CODE_AFTER_ADD_TODO_ITEM);
 	}
 	private void onDateButtonClicked()
 	{
@@ -188,7 +215,7 @@ public class EditItemView extends LinearLayout {
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		Activity hostActivity = (Activity)mContext;
-		hostActivity.startActivityForResult(intent, 2);
+		hostActivity.startActivityForResult(intent, DouDouToDoListUtils.REQUEST_CODE_AFTER_TAKE_PHOTO);
 	}
 	
 	public void showImageView(File imageFile)

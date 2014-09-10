@@ -26,4 +26,5 @@
 	<string name="todo_item_info_title">任务详情</string>
 	<string name="todo_item_info_back_button_default_text">返回</string>
 	<string name="today_todo_item_view_button_default_text">完成</string>
+	<string name="edit_item_view_title_is_incomplete">任务标题不能为空</string>
 </resources>

@@ -32,7 +32,7 @@ public class ReminderService extends Service {
 		Intent intent2 = new Intent(this.getApplicationContext(), DouDouToDoListActitvity.class);
 		intent2.putExtra("isNotification", true);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-		.setSmallIcon(R.drawable.ic_launcher)
+		.setSmallIcon(R.drawable.ic_launch)
 		.setContentTitle(intent.getStringExtra("title"))
 		.setWhen(System.currentTimeMillis())
 		.setAutoCancel(true);

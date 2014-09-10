@@ -44,7 +44,7 @@ public class DouDouToDoListDB {
 			values.put("date_day", toDoItemInfo.getDate_day());
 			values.put("time_hour", toDoItemInfo.getTime_hour());
 			values.put("time_minute", toDoItemInfo.getTime_minute());
-			values.put("is_repeat", toDoItemInfo.getIs_complete());
+			values.put("is_repeat", toDoItemInfo.getIs_repeat());
 			values.put("image_path", toDoItemInfo.getImage_path());
 			values.put("is_complete", toDoItemInfo.getIs_complete());
 			db.insert(TABLE_NAME, null, values);

@@ -121,7 +121,11 @@ public class DouDouToDoListActitvity extends ActionBarActivity
     	if(arg2 == null){
 			return ;
 		}
-    	if(arg0 == 2)
+    	if(arg0 == DouDouToDoListUtils.REQUEST_CODE_AFTER_ADD_TODO_ITEM)
+    	{
+    		onNavigationDrawerItemSelected(0);
+    	}
+    	if(arg0 == DouDouToDoListUtils.REQUEST_CODE_AFTER_TAKE_PHOTO)
     	{
     		String filename = System.currentTimeMillis() + ".jpg";
     		File fileFolder = new File(Environment.getExternalStorageDirectory() + "/photoForTodoList/");
