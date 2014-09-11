@@ -39,11 +39,11 @@
         android:id="@+id/photo_image_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"/>
+        android:layout_weight="3"
+        android:contentDescription="@string/todo_item_detail_view_image_description"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         
         <Button
@@ -58,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="@string/edit_item_view_save_button_default_text" />
-    </LinearLayout>"
+    </LinearLayout>
     
 
 </LinearLayout>

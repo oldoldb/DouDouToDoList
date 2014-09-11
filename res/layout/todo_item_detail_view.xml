@@ -2,31 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
     
     <TextView 
         android:id="@+id/title_text" 
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textSize="20sp"
         android:gravity="center_horizontal"/>
     <TextView 
         android:id="@+id/date_time_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textSize="16sp"
         android:gravity="center_horizontal"/>
     <CheckBox 
         android:id="@+id/is_repeat_checkbox"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textSize="16sp"
         android:clickable="false"
         android:text="@string/edit_item_view_is_everyday_checkbox_default_text" />
     <ImageView 
         android:id="@+id/detal_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"/>
+        android:layout_height="400dp"
+        android:contentDescription="@string/todo_item_detail_view_image_description"/>
 
 </LinearLayout>
