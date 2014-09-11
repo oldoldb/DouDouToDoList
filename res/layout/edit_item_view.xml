@@ -3,37 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#484E61" >
+    android:background="#27A5F9" >
     
     <EditText 
         android:id="@+id/title_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:hint="@string/edit_item_view_title_text_hint"/>
+        android:hint="@string/edit_item_view_title_text_hint"
+     	android:textColor="#ecf0f1"/>
     <Button 
         android:id="@+id/date_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
       	android:layout_weight="1"
+      	android:textColor="#ecf0f1"
+      	android:background="#2980b9"
       	android:text="@string/edit_item_view_date_button_default_text"/>
+    <View 
+        android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:background="#FF00FF00"/>
     <Button
         android:id="@+id/time_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textColor="#ecf0f1"
+      	android:background="#2980b9"
         android:text="@string/edit_item_view_time_button_default_text" />
     <CheckBox 
         android:id="@+id/is_repeat_checkbox"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textColor="#ecf0f1"
         android:text="@string/edit_item_view_is_everyday_checkbox_default_text" />
     <Button
         android:id="@+id/add_photo_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:textColor="#ecf0f1"
+      	android:background="#2980b9"
         android:text="@string/edit_item_view_add_photo_button_default_text" />
     <ImageView 
         android:id="@+id/photo_image_view"
@@ -51,12 +63,16 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="#ecf0f1"
+      		android:background="#2980b9"
             android:text="@string/edit_item_view_cancel_button_default_text" />
         <Button
             android:id="@+id/save_button"
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="#ecf0f1"
+      		android:background="#2980b9"
             android:text="@string/edit_item_view_save_button_default_text" />
     </LinearLayout>
     

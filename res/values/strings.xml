@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DouDouToDoList</string>
+    <string name="app_name">豆豆速记</string>
     <string name="title_todo">待办任务</string>
     <string name="title_add_info">添加任务</string>
     <string name="title_complete">已完成任务</string>

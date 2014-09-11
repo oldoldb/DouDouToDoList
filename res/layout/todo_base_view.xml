@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#484E61"
+    android:background="#27A5F9"
     tools:context="com.oldoldb.doudoutodolist.DouDouToDoListActitvity$PlaceholderFragment" >
 
     <android.support.v4.widget.SwipeRefreshLayout
